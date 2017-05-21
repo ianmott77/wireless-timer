@@ -2,6 +2,7 @@
 
 #define SLAVE_ADDRESS 0x40
 
+//reciever function
 void receiver(Packet * pack){
   Serial.print("Size: ");
   Serial.println(pack->getSize());
@@ -14,6 +15,7 @@ void receiver(Packet * pack){
   }
 }
 
+//sender function
 Packet * sender(){
   unsigned long m = millis();
   Packet * p = new Packet(&m, (char*) "long", sizeof(m));
@@ -26,7 +28,10 @@ void setup() {
     // wait serial port initialization
   }
   Serial.println("Ready");
-  // put your setup code here, to run once:
+  //create a new I2C connecton (int slaveAddress, function reciever, function sender)
+  //I2C connection uses events so we use functions as parameters 
+  //sender function must return a Packet* 
+  //reciever function takes Packet* as parameter and void return
   I2C * i2c = newI2C(SLAVE_ADDRESS, receiver, sender);
 }
 
