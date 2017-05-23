@@ -6,9 +6,9 @@
 void receiver(Packet * pack){
   Serial.print("Size: ");
   Serial.println(pack->getSize());
-  if(pack->getDataType() == "int"){
+  if(strcmp(pack->getDataType(),  "int") == 0){
     Serial.println(*(int*)pack->getData());
-  }else if(pack->getDataType() == "long"){
+  }else if(strcmp(pack->getDataType(), "long") == 0){
     Serial.println(*(long*)pack->getData());
   }else if(strcmp(pack->getDataType() , "string") == 0){
     Serial.println((char*)pack->getData());
