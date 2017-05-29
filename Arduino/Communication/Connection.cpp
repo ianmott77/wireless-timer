@@ -1,19 +1,22 @@
 #include "Connection.h"
 
 char * input = '\0';
-char *  output = '\0';
+char * output = '\0';
+char * part = '\0';
+
+bool sizeSent = false;
+bool last = false;
+bool allDone = true;
+bool done = false;
+
 int marker = 0;
 double blocks = 0;
 int block = 0;
 int inputSize = 0;
-bool start = false;
-bool done = false;
+
 I2C * i2c = '\0';
 Packet * message = '\0';
-bool sizeSent = false;
-char * part = '\0';
-bool last = false;
-bool allDone = true;
+
 
 I2C * newI2C(int address, receivePack r, sendMessage s){
     afterPackCreation = r;
@@ -61,14 +64,13 @@ void initOutput(){
         blocks++;
     output = (char*) malloc(inputSize);
     root.printTo(output, inputSize);
+    allDone = false;
 }
 
 void send(){
     
     if(allDone){
         //initialize
-        start = true;
-        allDone = false;
         message = beforePackCreation();
         initOutput();
         delete message;
