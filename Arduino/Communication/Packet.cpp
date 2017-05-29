@@ -58,18 +58,6 @@ Packet::~Packet(){
     this->data = '\0';
 }
 
-void * Packet::getData(){
-	return this->data;
-}
-
-int Packet::getSize(){
-	return this->size;
-}
-
-char * Packet::getDataType(){
-	return this->dataType;
-}
-
 void Packet::toJson(JsonObject& root){
     root["s"] = this->size;
     root["dt"] = this->dataType;

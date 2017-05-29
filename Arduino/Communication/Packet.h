@@ -8,9 +8,6 @@ class Packet{
 		Packet(void*, char *, int);
 		Packet(JsonObject&);
         ~Packet();
-		int getSize();
-		void * getData();
-		char * getDataType();
         void toJson(JsonObject&);
 		int size;
 		void * data;

@@ -13,6 +13,8 @@ Packet * message = '\0';
 bool sizeSent = false;
 char * part = '\0';
 int size = 0;
+bool last = false;
+bool allDone = true;
 
 I2C * newI2C(int address, receivePack r, sendMessage s){
     afterPackCreation = r;
@@ -22,75 +24,96 @@ I2C * newI2C(int address, receivePack r, sendMessage s){
 }
 
 void send(){
-    if(!start){
+    
+    if(allDone){
+        //initialize
         start = true;
+        allDone = false;
         message = beforePackCreation();
         StaticJsonBuffer<200> buffer;
         JsonObject& root = buffer.createObject();
         message->toJson(root);
         inputSize = root.measureLength()+1;
         blocks = ceil(inputSize/31.00);
-        if(inputSize > (blocks * 31)-5) blocks++;
+        if(inputSize > (blocks * 31)-5) 
+            blocks++;
         output = (char*) malloc(inputSize);
         root.printTo(output, inputSize);
         delete message;
     }
     
     if(!sizeSent){
-    
+
+        //prepare part
         int markerInc = 32;
     
         if(inputSize < 32){
             if(inputSize < 26){
-                markerInc = inputSize;
+                markerInc = inputSize+1;
             }else{
                 markerInc = 27;
             }
         }
-    
+
         if(blocks > 1 && block != blocks-1){
             //not the last block
-            part = substr(output, marker, markerInc);
+            part = substr(output, marker, markerInc-1);
             part[markerInc] = '\0';
+            last = false;
         }else if(block == blocks-1){
             //last block
             part = substr(output, marker, (inputSize-marker)-1);
-            char * done = str_append(part, "0x00\0");
+            char * donez = str_append(part, "0x00\0");
         
             delete part;
             part = '\0';
         
             part = (char*) malloc(((inputSize-marker)-1)+5);
-            strcpy(part, done);
+            strcpy(part, donez);
         
-            delete done;
-            done = '\0';
+            delete donez;
+            donez = '\0';
         
-            start = false;
+            last = true;
         }
+        
+        //send size of part 
         size = strlen(part);
         uint8_t * buf = (uint8_t*) malloc(2);
         buf[0] = size >> 8;
         buf[1] = size & 0xFF;
         Wire.write(buf, 2);
-        sizeSent = true;
         delete buf;
         buf = '\0';
+        
+        //size was sent
+        //keep block increment in this statemnet, otherwise doesn't work
+        sizeSent = true;
         marker += markerInc;
         block++;
+
     }else{
+        //send part
         Wire.write(part);
         delete part;
         part = '\0';
+        //reset to send size of next packet
+        if(last)
+            done = true;
         sizeSent = false;
     }
-    if(!start){
+    if(done){
+        //reset
         marker = 0;
         block = 0;
-        delete output;
-        output = '\0';
+        blocks = 0;
         size = 0;
         inputSize = 0;
+        delete output;
+        done = false;
+        last = false;
+        allDone = true;
+        output = '\0';
     }
 }
 
@@ -108,12 +131,18 @@ void receive(int bytes){
         done = false;
         char * temp = (char*) malloc(marker);
         strcpy(temp, input);
+        
         delete input;
         input = '\0';
+        input[0] = '\0';
+        
         input = (char*) malloc(marker+bytes+1);
         strncpy(input, temp, marker);
+        
         delete temp;
         temp = '\0';
+        temp[0] = '\0';
+        
         for(int i = 0; Wire.available(); i++){
             const char c = Wire.read();
             if(!done){
@@ -133,9 +162,13 @@ void receive(int bytes){
             message = createPacket(input);
             afterPackCreation(message);
             delete message;
+            
             delete input;
             input = '\0';
+            input[0] = '\0';
+            
             marker = 0;
+            done = false;            
         }
     }
 }
