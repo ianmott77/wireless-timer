@@ -12,7 +12,6 @@ I2C * i2c = '\0';
 Packet * message = '\0';
 bool sizeSent = false;
 char * part = '\0';
-int size = 0;
 bool last = false;
 bool allDone = true;
 
@@ -33,13 +32,12 @@ void sendInt(int n){
 }
 
 void resetOutput(){
+    delete output;
+    output = '\0';
     marker = 0;
     block = 0;
     blocks = 0;
-    size = 0;
     inputSize = 0;
-    delete output;
-    output = '\0';
     done = false;
     last = false;
     allDone = true;
