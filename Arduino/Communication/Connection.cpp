@@ -23,6 +23,48 @@ I2C * newI2C(int address, receivePack r, sendMessage s){
     return i2c;
 }
 
+void sendInt(int n){
+    uint8_t * buf = (uint8_t*) malloc(2);
+    buf[0] = n >> 8;
+    buf[1] = n & 0xFF;
+    Wire.write(buf, 2);
+    delete buf;
+    buf = '\0';
+}
+
+void resetOutput(){
+    marker = 0;
+    block = 0;
+    blocks = 0;
+    size = 0;
+    inputSize = 0;
+    delete output;
+    output = '\0';
+    done = false;
+    last = false;
+    allDone = true;
+}
+
+void resetInput(){
+    delete message;
+    delete input;
+    input = '\0';    
+    marker = 0;
+    done = false;   
+}
+
+void initOutput(){
+    StaticJsonBuffer<200> buffer;
+    JsonObject& root = buffer.createObject();
+    message->toJson(root);
+    inputSize = root.measureLength()+1;
+    blocks = ceil(inputSize/31.00);
+    if(inputSize > (blocks * 31)-5) 
+        blocks++;
+    output = (char*) malloc(inputSize);
+    root.printTo(output, inputSize);
+}
+
 void send(){
     
     if(allDone){
@@ -30,15 +72,7 @@ void send(){
         start = true;
         allDone = false;
         message = beforePackCreation();
-        StaticJsonBuffer<200> buffer;
-        JsonObject& root = buffer.createObject();
-        message->toJson(root);
-        inputSize = root.measureLength()+1;
-        blocks = ceil(inputSize/31.00);
-        if(inputSize > (blocks * 31)-5) 
-            blocks++;
-        output = (char*) malloc(inputSize);
-        root.printTo(output, inputSize);
+        initOutput();
         delete message;
     }
     
@@ -77,14 +111,8 @@ void send(){
             last = true;
         }
         
-        //send size of part 
-        size = strlen(part);
-        uint8_t * buf = (uint8_t*) malloc(2);
-        buf[0] = size >> 8;
-        buf[1] = size & 0xFF;
-        Wire.write(buf, 2);
-        delete buf;
-        buf = '\0';
+        //send size of part
+        sendInt(strlen(part));
         
         //size was sent
         //keep block increment in this statemnet, otherwise doesn't work
@@ -104,16 +132,7 @@ void send(){
     }
     if(done){
         //reset
-        marker = 0;
-        block = 0;
-        blocks = 0;
-        size = 0;
-        inputSize = 0;
-        delete output;
-        done = false;
-        last = false;
-        allDone = true;
-        output = '\0';
+        resetOutput();
     }
 }
 
@@ -159,13 +178,7 @@ void receive(int bytes){
         if(done){
             message = createPacket(input);
             afterPackCreation(message);
-            delete message;
-            
-            delete input;
-            input = '\0';
-            
-            marker = 0;
-            done = false;            
+            resetInput();
         }
     }
 }

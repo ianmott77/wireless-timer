@@ -17,6 +17,10 @@ static sendMessage beforePackCreation;
 I2C * newI2C(int, receivePack, sendMessage);
 Packet * createPacket(char * input);
 
+void initOutput();
+void resetInput();
+void resetOutput();
+void sendInt(int);
 void send();
 void receive(int);
 

@@ -1,18 +1,15 @@
 I2C KEYWORD1
 Connection KEYWORD1
 Packet KEYWORD1
-getSlave KEYWORD2
-setSlave KEYWORD2
-getTransmitter KEYWORD2
-setTransmitter KEYWORD2
-getReciever KEYWORD2
-setReciever KEYWORD2
 setup KEYWORD2
 newI2C KEYWORD2
-getData KEYWORD2
-getSize KEYWORD2
-getDataType KEYWORD2
 createPacket KEYWORD2
 str_append KEYWORD2
 toJson KEYWORD2
-
+sendInt KEYWORD2
+resetOutput KEYWORD2
+resetInput KEYWORD2
+initOutput KEYWORD2
+substr KEYWORD2
+str_ends KEYWORD2
+mem KEYWORD2
