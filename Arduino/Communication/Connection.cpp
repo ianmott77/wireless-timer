@@ -134,14 +134,12 @@ void receive(int bytes){
         
         delete input;
         input = '\0';
-        input[0] = '\0';
         
         input = (char*) malloc(marker+bytes+1);
         strncpy(input, temp, marker);
         
         delete temp;
         temp = '\0';
-        temp[0] = '\0';
         
         for(int i = 0; Wire.available(); i++){
             const char c = Wire.read();
@@ -165,7 +163,6 @@ void receive(int bytes){
             
             delete input;
             input = '\0';
-            input[0] = '\0';
             
             marker = 0;
             done = false;            
