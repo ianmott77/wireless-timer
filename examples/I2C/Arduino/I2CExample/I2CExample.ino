@@ -5,20 +5,22 @@
 //reciever function
 void receiver(Packet * pack){
   Serial.print("Size: ");
-  Serial.println(pack->getSize());
-  if(pack->getDataType() == "int"){
-    Serial.println(*(int*)pack->getData());
-  }else if(pack->getDataType() == "long"){
-    Serial.println(*(long*)pack->getData());
-  }else if(strcmp(pack->getDataType() , "string") == 0){
-    Serial.println((char*)pack->getData());
+  Serial.println(pack->size);
+  if(strcmp(pack->dataType, "int") == 0){
+    Serial.println(*(int*)pack->data);
+  }else if(strcmp(pack->dataType, "long") == 0){
+    Serial.println(*(long*)pack->data);
+  }else if(strcmp(pack->dataType , "string") == 0){
+    Serial.println((char*)pack->data);
   }
 }
 
 //sender function
 Packet * sender(){
-  unsigned long m = millis();
-  Packet * p = new Packet(&m, (char*) "long", sizeof(m));
+  char * str = new char[10];
+  strcpy(str, "hello wor");
+  Packet * p = new Packet(str, (char*) "string", 10);
+  delete str;
   return p;
 }
 
@@ -33,6 +35,7 @@ void setup() {
   //sender function must return a Packet* 
   //reciever function takes Packet* as parameter and void return
   I2C * i2c = newI2C(SLAVE_ADDRESS, receiver, sender);
+  mem();
 }
 
 void loop() {
