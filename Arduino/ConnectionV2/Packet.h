@@ -1,17 +1,16 @@
 #ifndef PACKET_H
 #define PACKET_H
 
-#include <ArduinoJson.h>
 #include <Arduino.h>
+enum DataType{INT = 0, FLOAT = 1, LONG = 2, ULONG = 3, STRING = 4};
+
 class Packet{
 	public:
-		Packet(void*, char *, int);
-		Packet(JsonObject&);
+		Packet(void*, DataType, int);
         ~Packet();
-        void toJson(JsonObject&);
 		int size;
 		void * data;
-		char * dataType;
+		DataType dataType;
 };
 
 #endif
