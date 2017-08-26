@@ -1,11 +1,13 @@
 #include "Connection.h"
 #include <MemoryFree.h>
-
+#define OUT 7
+#define IN 8
 void m(){
     Serial.print("mem=");
     Serial.println(freeMemory());
     Serial.flush();
 }
+
 void wireReceiver(int bytes){
     if(!blocking){
         accept();
@@ -34,12 +36,15 @@ void setThisAddress(uint8_t t_address){
 
 bool switchTo(Connection c){
     currentConnection = c;
+    pinMode(IN, OUTPUT);
+    pinMode(OUT, OUTPUT);
     if(currentConnection == I2){
         Wire.begin(SLAVE_ADDRESS);
         Wire.setClock(400000);
         Wire.onReceive(wireReceiver);
         Wire.onRequest(sendWire); 
     }else if(currentConnection == LORA){
+
         if(driver == '\0'){
             driver = new RH_RF95(RFM95_CS, RFM95_INT);
         }
@@ -200,17 +205,20 @@ int readInt(){
             r |= read() & 0xFF;
         }
     }else{
-        uint8_t * buf = (uint8_t*) malloc(2);
-        uint8_t len = 2;
-        uint8_t from;
-        if (manager->recvfromAck(buf, &len, &from)){
+        uint8_t * buf = malloc(2);
+        uint8_t * len = malloc(2);
+        uint8_t l = 2;
+        memcpy(len, &l, 2);
+        uint8_t  * from = malloc(2);
+        if (manager->recvfromAck(buf, len, from)){
             r = buf[0] << 8;
             r |= buf[1] & 0xFF;
         }else{
             Serial.println("receive Failed");
         }
         delete buf;
-        buf[0]= '\0';
+        delete len;
+        delete from;
     }
     return  r;
 }
@@ -228,17 +236,22 @@ long readLong(){
         return long_union.val;
     }else{
         uint8_t * buf = (uint8_t*) malloc(4);
-        uint8_t len = 4;
-        uint8_t from;
+        uint8_t * len = malloc(2);
+        uint8_t r = 4;
+        memcpy(len, &r, sizeof(r));
+        uint8_t * from = malloc(2);
         
-        if (!manager->recvfromAck(buf, &len, &from)){
+        if (!manager->recvfromAck(buf, len, from)){
             delete buf;
-            buf = '\0';
+            delete len;
+            delete from;
             return NULL;
         }
         long val = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
         delete buf;
-        buf[0] = '\0';
+        delete len;
+        delete from;
+        
         return val;
     }
 }
@@ -255,16 +268,23 @@ unsigned long readULong(){
         }
         return long_union.val;
     }else{
-        uint8_t * buf = (uint8_t*) malloc(4);
-        uint8_t len = 4;
-        uint8_t from;
+        uint8_t * buf = malloc(4);
+        uint8_t * len = malloc(2);
+        uint8_t r = 4;
+        memcpy(len, &r, sizeof(r));
+        uint8_t * from = malloc(2);
         
-        if (!manager->recvfromAck(buf, &len, &from)){
+        if (!manager->recvfromAck(buf, len, from)){
             delete buf;
+            delete len;
+            delete from;
             return NULL;
         }
-        unsigned long val = (unsigned long) (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
+        unsigned long val = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
         delete buf;
+        delete len;
+        delete from;
+        
         return val;
     }
 }
@@ -276,17 +296,24 @@ char * readString(int size){
             str[i] = read();
         }
     }else{
-        uint8_t len = sizeof(str);
-        uint8_t from;
-        if (!manager->recvfromAck(str, &len, &from)){
+        uint8_t * len = malloc(2);
+        uint8_t r = sizeof(str);
+        memcpy(len, &r, sizeof(r));
+        uint8_t * from = malloc(2);
+        if (!manager->recvfromAck(str, len, from)){
+            delete len;
+            delete from;
             return '\0';
         }
+        delete len;
+        delete from;
     }
     return str;   
 }
 
 void receive(){
     //receive size
+    digitalWrite(IN, HIGH);
     accept();
     //receive data type
     accept();
@@ -296,6 +323,7 @@ void receive(){
 
 void send(){
     //transmit size
+    digitalWrite(OUT, HIGH);
     transmit();
     //transmit data type
     transmit();
@@ -307,8 +335,6 @@ void transmit(){
     sDone = false;
     if(tCount == 0){
         message = beforePackCreation();
-        Serial.print("ts -");
-        m();
         if(message != 0){
             if(send(message->size))
                 tCount++;
@@ -348,8 +374,7 @@ void transmit(){
             delete output;
             delete message;
             output = '\0';
-            Serial.print("td -");
-            m();
+            digitalWrite(OUT, LOW);
             if(sendCallback != '\0')
                 sendCallback();
 
@@ -360,8 +385,6 @@ void transmit(){
 void accept(){
     rDone = false;
     if(rCount == 0){
-        Serial.print("s -");
-        m();
         if(currentConnection == LORA)
             manager->waitAvailable();
         size = readInt();
@@ -416,8 +439,7 @@ void accept(){
             delete p;
             delete input;
             input[0] = '\0';
-            Serial.print("d -");
-            m();
+            digitalWrite(IN, LOW);
             if(receiveCallback != '\0')
                 receiveCallback();
 

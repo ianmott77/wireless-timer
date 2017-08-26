@@ -34,14 +34,14 @@ static bool blocking = true;
 static int rCount = 0;
 static int tCount = 0;
 static int size = -1;
-static uint8_t _this_address;
-static uint8_t _next_address;
+static uint8_t _this_address = 0;
+static uint8_t _next_address = 0;
 static int dataType = -1;
 static bool rDone = false;
 static bool sDone = false;
 static char * input = '\0';
 static char * output = '\0';
-static Packet * message;
+static Packet * message = '\0';
 
 static RH_RF95 * driver ='\0';
 static RHReliableDatagram *  manager = '\0';
