@@ -9,11 +9,13 @@ uint8_t n_add = 2;
 
 static unsigned long startMils = 0;
 static unsigned long endMils = 0;
+unsigned long first = 0;
+unsigned long last = 0;
 unsigned long difs[DELAY_ARR];
 unsigned long del = 0;
 unsigned long dif = 0;
 unsigned long now = 0;
-unsigned long them = 0;
+unsigned long them;
 unsigned long t = 0;
 int drift = 0;
 int c = 0 ;
@@ -31,7 +33,6 @@ void rec_c(){
      * We build a sorted array so that we can discard values that are
      * out highest and lowest.
      */
-    m();
     endMils = millis();
     t = endMils - startMils;
     int d = 0;
@@ -47,9 +48,7 @@ void rec_c(){
       
     Serial.print(c);
     Serial.print(") Delay: ");
-    Serial.print(difs[d]);
-    Serial.print("     ");
-    m();
+    Serial.println(difs[d]);
     i++;
     startMils = millis();
   }else if(i == DELAY_ARR){
@@ -98,8 +97,6 @@ void rec_c(){
     Serial.println(t);
     Serial.print("Difference: ");
     Serial.println(dif);
-    Serial.print("Memory: ");
-    Serial.println(freeMemory());
     
     Serial.println();
     Serial.flush();
@@ -109,23 +106,24 @@ void rec_c(){
     t = (them - del) - dif;
     drift = t - now;
     if(i == DELAY_ARR + 2){
+      first = t;
       Serial.print("Them ");
       Serial.print("         ");
       Serial.print("Me   ");
       Serial.print("         ");
       Serial.print("Adjusted  ");
       Serial.print("    ");
-      Serial.print("Memory    ");
-      Serial.print("    ");
       Serial.println("Drift");      
+    }else if(i == DELAY_ARR +32){
+        double factor = drift / ((last - first)/1000.0000);
+        Serial.print("Drift ms/s = ");
+        Serial.println(factor);
     }
     Serial.print(them);
     Serial.print("          ");
     Serial.print(now);
     Serial.print("          ");
     Serial.print(t);
-    Serial.print("          ");
-    Serial.print(freeMemory());
     Serial.print("           ");
     Serial.println(drift);
     Serial.flush();
@@ -147,7 +145,6 @@ void rec(Packet * pack) {
 
 //sender
 Packet * sen() {
-  m();
   return new Packet(&o, INT, sizeof(o));
 }
 
@@ -156,17 +153,14 @@ void setup() {
   Serial.begin(9600);
   while (!Serial) ;
   Serial.println("Ready!");
-  m();
   setThisAddress(t_add);
   if(!switchTo(LORA))
     Serial.println("init failed!");
-  m();
   setNextAddress(n_add);
   setReceiveCallback(rec_c);
   setSendCallback(sen_c);
   setHandlers(rec, sen);
   startMils = millis();
-  m();
   send();
 }
 
