@@ -32,13 +32,13 @@ void rec(Packet * pack) {
 //sender
 Packet * sendMils() {
   now = millis();
-  return new Packet(&now, ULONG, sizeof(now));
+  return new Packet(&now, ULONG, sizeof(now), 0);
 }
 
 //sender
 Packet * sen() {
   g++;
-  return new Packet(&g, INT, sizeof(g));
+  return new Packet(&g, INT, sizeof(g), 0);
 }
 
 void setup() {
@@ -46,6 +46,8 @@ void setup() {
   Serial.begin(9600);
   while (!Serial) ;
   Serial.println("ready!");
+  setBlocking(false);
+  switchTo(I2);
   setThisAddress(t_add);
   if(!switchTo(LORA))
     Serial.println("init failed!");

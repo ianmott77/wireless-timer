@@ -1,23 +1,26 @@
 #ifndef CONNECTION_MANAGER_H
 #define CONNECTION_MANAGER_H
-
 #include <typeinfo>
+#include <sys/wait.h>
 
 #include "ConnectionFactory.h"
 #include "Packet.h"
-#include "json/json.hpp"
-
-using json = nlohmann::json;
 
 class ConnectionManager{
 	public:
 		ConnectionManager();
 		~ConnectionManager();
-		bool connect(ConnectionType type);
+		bool connect(ConnectionType);
 		Connection * getCurrentConnection();
 		void setCurrentConnection(Connection *);
-		bool sendData(Packet *);
-		Packet * readData();
+		void switchTo(ConnectionType);
+		bool send(Packet *);
+		bool send(int, int position = 0);
+		bool send(long, int position = 0);
+		bool send(float, int position = 0);
+		bool send(std::string, int position = 0);
+		Packet * read();
+		void closeConnection();
 	private:
 		Connection * connections[3];
 		ConnectionType currentConnection;

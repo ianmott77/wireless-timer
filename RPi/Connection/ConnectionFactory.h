@@ -1,7 +1,6 @@
 #ifndef CONNECTION_FACTORY_H
 #define CONNECTION_FACTORY_H
 
-#include "defs.h"
 #include "I2C.h"
 #include "Serial.h"
 #include "SPI.h"

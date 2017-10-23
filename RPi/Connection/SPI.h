@@ -8,8 +8,7 @@ class Spi : public Connection{
 		Spi();
 		~Spi();
 		bool setup();
-		bool send(std::string);
-		std::string recieve();
+		ConnectionType getType();
 	private:
 };
 

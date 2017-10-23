@@ -1,9 +1,12 @@
-all: Connection.o Packet.o I2C.o Serial.o SPI.o ConnectionFactory.o ConnectionManager.o main.o
-	g++ -std=c++11 -o connect Connection.o Packet.o I2C.o Serial.o SPI.o ConnectionFactory.o ConnectionManager.o main.o
+all: Connection.o Packet.o I2C.o Serial.o SPI.o ConnectionFactory.o ConnectionManager.o SerialMonitor.o main.o
+	g++ -std=c++11 -lpthread -o  connect Connection.o Packet.o I2C.o Serial.o SPI.o ConnectionFactory.o ConnectionManager.o SerialMonitor.o main.o
 
 main.o: main.cpp
-	g++ -std=c++11 -c main.cpp
+	g++ -std=c++11 -lpthread -c main.cpp
 
+SerialMonitor.o: SerialMonitor.cpp
+	g++ -std=c++11 -c SerialMonitor.cpp
+	
 ConnectionFactory.o: ConnectionFactory.cpp
 	g++ -std=c++11 -c ConnectionFactory.cpp
 	
@@ -26,4 +29,4 @@ Packet.o: Packet.cpp
 	g++ -std=c++11 -c Packet.cpp
 
 clean: 
-	rm -f *.o main Packet I2C Serial SPI ConnectionManager ConnectionFactory Connection
+	rm -f *.o main connect Packet I2C Serial SPI ConnectionManager ConnectionFactory SerialMonitor Connection

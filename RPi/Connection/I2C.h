@@ -5,19 +5,13 @@
 #include <sys/ioctl.h>
 
 #include "Connection.h"
-#include <math.h>
 
 class i2c : public Connection{
 	public:
 		i2c();
 		~i2c();
 		bool setup();
-		bool send(std::string);
-		std::string recieve();
-	private:
-		int file;
-		int address;
-		std::string filename;
+		ConnectionType getType();
 };
 
 #endif

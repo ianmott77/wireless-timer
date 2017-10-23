@@ -1,25 +1,41 @@
 #include "Connection.h"
 #include <MemoryFree.h>
+
 #define OUT 7
 #define IN 8
+
 void m(){
     Serial.print("mem=");
     Serial.println(freeMemory());
     Serial.flush();
 }
 
+int getDeviceID(){
+    return EEPROM.read(0);
+}
+
+int getDeviceType(){
+    return EEPROM.read(2);
+}
+
 void wireReceiver(int bytes){
+    i2cOriginating = true;
     if(!blocking){
+        digitalWrite(IN, HIGH);
         accept();
     }else if(currentConnection == I2){
+        digitalWrite(IN, HIGH);
         accept();
     } 
 }
 
 void sendWire(){
+    i2cOriginating = true;
     if(!blocking){
+        digitalWrite(OUT, HIGH);
         transmit();
     }else if(currentConnection == I2){
+        digitalWrite(OUT, HIGH);
         transmit();
     }
 }
@@ -28,14 +44,49 @@ void setNextAddress(uint8_t next){
     _next_address = next;
 }
 
+void setPrevAddress(uint8_t prev){
+    _prev_address = prev;
+}
+
 void setThisAddress(uint8_t t_address){
     _this_address = t_address;
     if(manager != '\0')
         manager->setThisAddress(_this_address);
 }
 
+uint8_t getPrevAddress(){
+    return _prev_address;
+}
+
+uint8_t getNextAddress(){
+    return _next_address;
+}
+
+uint8_t getThisAddress(){
+    return _this_address;
+}
+
+uint8_t getMyPosition(){
+    return my_position;
+}
+
+void setMyPosition(uint8_t pos){
+    my_position = pos;
+}
+
+void setI2COriginating(bool orig){
+    i2cOriginating = orig;
+}
+
+RHReliableDatagram * getManager(){
+    return manager;
+}
+
 bool switchTo(Connection c){
+    if(c != SER && c != I2 && c != SPIC && c != LORA) 
+        return false;
     currentConnection = c;
+    i2cOriginating = false;
     pinMode(IN, OUTPUT);
     pinMode(OUT, OUTPUT);
     if(currentConnection == I2){
@@ -44,7 +95,6 @@ bool switchTo(Connection c){
         Wire.onReceive(wireReceiver);
         Wire.onRequest(sendWire); 
     }else if(currentConnection == LORA){
-
         if(driver == '\0'){
             driver = new RH_RF95(RFM95_CS, RFM95_INT);
         }
@@ -54,11 +104,18 @@ bool switchTo(Connection c){
             if (!manager->init()){
                 return false;
             }
+            
         }
-       
+        manager->setRetries(5);
         driver->setTxPower(23, false);
+        driver->setFrequency(915.0);
+
     }
     return true;
+}
+
+Connection getCurrentConnection(){
+    return currentConnection;
 }
 
 void setHandlers(receivePack r, sendMessage s){
@@ -105,7 +162,10 @@ int write(char data){
         return n;
     }else if(currentConnection == SPIC){
     }else if(currentConnection == LORA){
-        return manager->sendtoWait(data, sizeof(data), _next_address);
+        uint8_t to = (_send_address == 255) ? _next_address : _send_address;
+        int g = manager->sendtoWait(data, sizeof(data), to);
+        _send_address = 255;
+        return g;
     }
 }
 
@@ -119,7 +179,14 @@ int write(uint8_t * buf, int size){
     }else if(currentConnection == SPIC){
         
     }else if(currentConnection == LORA){
-        if(manager->sendtoWait(buf, size, _next_address)){
+        uint8_t to;
+        if(_send_address == 255) {
+             to = _next_address; 
+        }else{
+             to = _send_address;
+        }
+        if(manager->sendtoWait(buf, size, to)){
+            _send_address = 255;
             return size;
         }
         return 0;
@@ -215,7 +282,10 @@ int readInt(){
             r |= buf[1] & 0xFF;
         }else{
             Serial.println("receive Failed");
+            Serial.flush();
         }
+        _prev_address = *from;
+       
         delete buf;
         delete len;
         delete from;
@@ -247,6 +317,7 @@ long readLong(){
             delete from;
             return NULL;
         }
+        _prev_address = *from;
         long val = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
         delete buf;
         delete len;
@@ -280,6 +351,7 @@ unsigned long readULong(){
             delete from;
             return NULL;
         }
+        _prev_address = *from;
         unsigned long val = (buf[3] << 24) | (buf[2] << 16) | (buf[1] << 8) | buf[0];
         delete buf;
         delete len;
@@ -305,10 +377,15 @@ char * readString(int size){
             delete from;
             return '\0';
         }
+        _prev_address = *from;
         delete len;
         delete from;
     }
     return str;   
+}
+
+bool isI2COriginating(){
+    return i2cOriginating;
 }
 
 void receive(){
@@ -316,6 +393,8 @@ void receive(){
     digitalWrite(IN, HIGH);
     accept();
     //receive data type
+    accept();
+    //receive position
     accept();
     //receive data
     accept();
@@ -327,6 +406,8 @@ void send(){
     transmit();
     //transmit data type
     transmit();
+    //transmit position
+    transmit();
     //transmit data
     transmit();
 }
@@ -334,17 +415,28 @@ void send(){
 void transmit(){
     sDone = false;
     if(tCount == 0){
-        message = beforePackCreation();
-        if(message != 0){
-            if(send(message->size))
-                tCount++;
+        if(i2cOriginating){
+            temp = currentConnection;
+            currentConnection = I2;
         }
-    }
-    else if(tCount == 1){
+        message = beforePackCreation();
+        if(message->position < getMyPosition() && message->position != 0){
+            _send_address = getPrevAddress();
+        }
+        if(message != 0){
+            if(send(message->size)){
+                tCount++;
+            }
+        }
+    }else if(tCount == 1){
         if(send(message->dataType)){
             tCount++;
         }
-    }else if(tCount >= 2){
+    }else if(tCount == 2){
+        if(send(message->position)){
+            tCount++;
+        }
+    }else if(tCount >= 3){
         if(message->dataType == INT){
             if(send(*(int*) message->data))
                 sDone = true;
@@ -357,15 +449,16 @@ void transmit(){
             if(send(*(unsigned long*) message->data))
                 sDone = true;
         }else if(message->dataType == STRING){
-            if(currentConnection == SER){
+            if(currentConnection  != I2){
                 if(send((char*) message->data))
                     sDone = true;
             }else{
-                if(tCount == 2)
+                //not properly implemented yet
+                if(tCount == 3)
                     output = (char*) message->data;
-                if(write(output[tCount - 2]))
+                if(write(output[tCount - 3]))
                     tCount++;
-                if(tCount - 2 == size)
+                if(tCount - 3 == size)
                     sDone = true;
             }
         }
@@ -373,7 +466,10 @@ void transmit(){
             tCount = 0;
             delete output;
             delete message;
+            position = 0;
             output = '\0';
+            if(i2cOriginating)
+                currentConnection = temp;
             digitalWrite(OUT, LOW);
             if(sendCallback != '\0')
                 sendCallback();
@@ -385,8 +481,12 @@ void transmit(){
 void accept(){
     rDone = false;
     if(rCount == 0){
+        if(i2cOriginating){
+            temp = currentConnection;
+            currentConnection = I2;
+        }
         if(currentConnection == LORA)
-            manager->waitAvailable();
+           manager->waitAvailable();
         size = readInt();
         rCount++;
     }else if(rCount == 1){
@@ -394,51 +494,59 @@ void accept(){
             manager->waitAvailable();
         dataType = readInt();
         rCount++;
-    }else if(rCount >= 2){
+    }else if(rCount == 2){
+        if(currentConnection == LORA)
+            manager->waitAvailable();
+        position = readInt();
+        rCount++;
+    }else if(rCount >= 3){
         Packet * p;
         if(currentConnection == LORA)
             manager->waitAvailable();
         if(dataType == 0){
             int data = readInt();
-            p = new Packet(&data, INT, size);
+            p = new Packet(&data, INT, size, position);
             rDone = true;
         }else if(dataType == 1){
             float data = (float) readLong();
-            p = new Packet(&data, FLOAT, size);
+            p = new Packet(&data, FLOAT, size, position);
             rDone = true;
         }else if(dataType == 2){
             long data = readLong();
-            p = new Packet(&data, LONG, size);
+            p = new Packet(&data, LONG, size, position);
             rDone = true;
         }else if(dataType == 3){
             unsigned long data = readULong();
-            p = new Packet(&data, ULONG, size);
+            p = new Packet(&data, ULONG, size, position);
             rDone = true;
         }else if(dataType == 4){
-            if(currentConnection == SER){
+            if(currentConnection != I2){
                 input = readString(size);
                 rDone = true;
             }else{
-                if(rCount == 2){
+                if(rCount == 3){
                     input = (char*) malloc(size);
                 }
-                input[rCount - 2] = read();
+                input[rCount - 3] = read();
                 rCount++;
-                if(rCount - 2 == size){
+                if(rCount - 3 == size){
                     rDone = true;
                 }
             }
             if(rDone)
-                p = new Packet(input, STRING, size);
+                p = new Packet(input, STRING, size, position);
         }
         if(rDone){
             afterPackCreation(p);
             rCount = 0;
             dataType = -1;
             size = 0;
+            position = 0;
             delete p;
             delete input;
             input[0] = '\0';
+            if(i2cOriginating)
+                currentConnection = temp;
             digitalWrite(IN, LOW);
             if(receiveCallback != '\0')
                 receiveCallback();

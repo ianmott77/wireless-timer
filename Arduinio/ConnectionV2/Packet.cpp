@@ -1,9 +1,10 @@
 #include "Packet.h"
 
-Packet::Packet(void * data, DataType dataType, int size){
+Packet::Packet(void * data, DataType dataType, int size, int position){
     this->dataType = dataType;
 	this->size = size;
     this->data = malloc(size);
+    this->position = position;
     if(this->dataType == LONG){
         memcpy(this->data, (long*) data, size);
     }else if(this->dataType == ULONG){

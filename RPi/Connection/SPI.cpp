@@ -12,10 +12,6 @@ bool Spi::setup(){
 
 }
 
-bool Spi::send(std::string buffer){
-	
-}
-
-std::string Spi::recieve(){
-
+ConnectionType Spi::getType(){
+	return SPI;
 }

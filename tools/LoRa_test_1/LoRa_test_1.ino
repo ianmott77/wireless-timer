@@ -16,11 +16,56 @@ unsigned long del = 0;
 unsigned long dif = 0;
 unsigned long now = 0;
 unsigned long them;
-unsigned long t = 0;
+unsigned long adjusted = 0;
+
 int drift = 0;
+float factor = 0;
 int c = 0 ;
 int i = 0;
 int o = 1;
+
+unsigned long getTimez(){
+    if(factor < 0.00 || factor > 0.00){
+        /*
+        adf = adjusted drift factor
+        s = seconds
+        now = adjusted
+        ftm = first
+        f = factor
+        s = (now - ftm)/1000.00 (this gives how man seconds have passed since we first synced)
+        adf = s*f (here we multiply the ms/s drift by the number of seconds that have gone by to get the number of milliseconds to add to the time)
+        */
+        //adjust the time for the diffrence between the clocks
+        Serial.print("first: ");
+        Serial.println(first);
+        Serial.print("n: ");
+        Serial.println(now);
+        Serial.print("dif: ");
+        Serial.println(dif);
+        Serial.print("factor: ");
+        Serial.println(factor);
+        unsigned long a = now - dif;
+        Serial.print("a: ");
+        Serial.println(a);
+        
+        //calculate the elapsed seconds between when we first synced and now
+        float s = (a - first)/1000.00;
+        Serial.print("s: ");
+        Serial.println(s);
+        //multiply the seconds by the ms/s that the clocks drift apart by to obtain the adujsted drift factor
+        
+        float adf = (factor > 0) ? s*factor : s*(factor*-1);
+        Serial.print("adf: ");
+        Serial.println(adf);
+        a += adf;
+        Serial.print("final: ");
+        Serial.println(a);
+        Serial.flush();
+        return a;
+    }else{
+        return now;
+    }
+}
 
 void sen_c(){
   receive();
@@ -34,14 +79,14 @@ void rec_c(){
      * out highest and lowest.
      */
     endMils = millis();
-    t = endMils - startMils;
+    adjusted = endMils - startMils;
     int d = 0;
     
     //add delay in order
     for(int k = i; k >= 0 && d == 0; k--){
       if(k > 0) difs[k] = difs[k-1];
-      if(difs[k] <= t){
-        difs[k] = t;
+      if(difs[k] <= adjusted){
+        difs[k] = adjusted;
         d = k;
       }
     }
@@ -85,16 +130,16 @@ void rec_c(){
      *the difference between the two can be calculated 
      */
 
-    dif = (them - del) - now;
-    t = (them - del) - dif ;
-    
+    them -= del;
+    dif = now - them;
+    first = now - dif;
     /*********************/
     Serial.print("Them:");
     Serial.println(them);
     Serial.print("Me:  ");
     Serial.println(now);
     Serial.print("Adjusted: ");
-    Serial.println(t);
+    Serial.println(first);
     Serial.print("Difference: ");
     Serial.println(dif);
     
@@ -103,10 +148,10 @@ void rec_c(){
     i++;
     now = millis();
   }else{
-    t = (them - del) - dif;
-    drift = t - now;
+    them -= del;
+    adjusted = (factor == 0) ? now - dif : getTimez();
+    drift = adjusted - them;
     if(i == DELAY_ARR + 2){
-      first = t;
       Serial.print("Them ");
       Serial.print("         ");
       Serial.print("Me   ");
@@ -115,7 +160,8 @@ void rec_c(){
       Serial.print("    ");
       Serial.println("Drift");      
     }else if(i == DELAY_ARR +32){
-        double factor = drift / ((last - first)/1000.0000);
+        last = adjusted;
+        factor = drift / ((last - first)/1000.0000);
         Serial.print("Drift ms/s = ");
         Serial.println(factor);
     }
@@ -123,7 +169,7 @@ void rec_c(){
     Serial.print("          ");
     Serial.print(now);
     Serial.print("          ");
-    Serial.print(t);
+    Serial.print(adjusted);
     Serial.print("           ");
     Serial.println(drift);
     Serial.flush();
@@ -145,7 +191,7 @@ void rec(Packet * pack) {
 
 //sender
 Packet * sen() {
-  return new Packet(&o, INT, sizeof(o));
+  return new Packet(&o, INT, sizeof(o),0);
 }
 
 void setup() {
@@ -153,6 +199,8 @@ void setup() {
   Serial.begin(9600);
   while (!Serial) ;
   Serial.println("Ready!");
+  setBlocking(false);
+  switchTo(I2);
   setThisAddress(t_add);
   if(!switchTo(LORA))
     Serial.println("init failed!");
