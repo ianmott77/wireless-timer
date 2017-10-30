@@ -1,5 +1,3 @@
-#include <MemoryFree.h>
-
 #include <Connection.h>
 
 #define DELAY_ARR 10
