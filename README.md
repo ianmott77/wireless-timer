@@ -47,7 +47,7 @@ In order to write your desired unique device ID to the Arudino simply change whe
 Inside the repo you will also find a folder named "tools" inside this folder you will find a script name "WriteDeviceType" in order to set up the Arduino we need to write a the device type to the Arduino. There are 3 different device types 
 
 * 1 = Starter
-* 2 = Interval (Finish Eyes)once
+* 2 = Interval (Finish Eyes)
 * 3 = Monitor Node (not yet implemented)
 
 ```
