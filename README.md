@@ -7,7 +7,7 @@
 # Things You Should Know Before Continuing
 * How to solder
 * Basic C/C++ programming knowledge would be an asset (e.g. loops, constants)
-* Basic Knowledge of Linux systems (e.g. File System set up, terminal use)
+* Basic Knowledge of Linux systems (e.g. file system, terminal use)
 * How to upload Arduino libraries
 * How to import new Arduino libraries
 
