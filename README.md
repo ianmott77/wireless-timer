@@ -33,33 +33,33 @@ To set up the the software for the Arduino start by downloading the WirelessTime
 Inside the repo you will also find a folder named "tools" inside this folder you will find a script name "WriteDeviceID" in order to set up the Arduino we need to write a Device ID to it's EEPROM which will be saved permamnetly and should be unique for all the timers in your network. If you open up the script you will find a script like this
 ```
 #include <EEPROM.h>
-#define DEVICE_ID <x>
+#define DEVICE_ID x
 
 void setup(){
     EEPROM.write(0, DEVICE_ID);
 }
 void loop(){}
 ```
-In order to write your desired unique device ID to the Arudino simply change where the "<x>" is to the unique device ID number you want and upload it to the Arduino. The device ID will be save permanently to the Arduino,after you run this script once you won't have to run it on an Arduino again unless you are changing it's device type.
+In order to write your desired unique device ID to the Arudino simply change where the "x" is to the unique device ID number you want and upload it to the Arduino. The device ID will be save permanently to the Arduino,after you run this script once you won't have to run it on an Arduino again unless you are changing it's device type.
 
  
 #### Device Type
 Inside the repo you will also find a folder named "tools" inside this folder you will find a script name "WriteDeviceType" in order to set up the Arduino we need to write a the device type to the Arduino. There are 3 different device types 
 
-1 = Starter
-2 = Interval (Finish Eyes)once
-3 = Monitor Node (not yet implemented)
+* 1 = Starter
+* 2 = Interval (Finish Eyes)once
+* 3 = Monitor Node (not yet implemented)
 
 ```
 #include <EEPROM.h>
-#define DEVICE_TYPE <x>
+#define DEVICE_TYPE x
 
 void setup(){
     EEPROM.write(1, DEVICE_TYPE);
 }
 void loop(){}
 ```
-In order to set the device type of the Arduino simply change the "<x>" in the script to the device type of you need and upload it to the Arduino. The device type will be save permanently to the Arduino, after you run this script once you won't have to run it on an Arduino again unless you are changing it's device ID.
+In order to set the device type of the Arduino simply change the "x" in the script to the device type of you need and upload it to the Arduino. The device type will be save permanently to the Arduino, after you run this script once you won't have to run it on an Arduino again unless you are changing it's device ID.
 
 #### CLI
 The final set up step for an Arduino is to upload the CLI script. Once you have done that you are done!
