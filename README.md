@@ -18,4 +18,23 @@ If you look in the diagarams folder you will find fritzing diagrams of how the d
 * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
 * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
 ## Set Up
-###
+### Arduino
+To set up the the software for the Arduino start by downloading the WirelessTimer repo. The CLI folder contains the main program for the Arduino while the Conneciton folder contains the framework that it's built on. To install the program add the Connection library to the Arduino software (instruction here: https://www.arduino.cc/en/hacking/libraries).
+#### Device ID
+Inside the repo you will also find a folder named "tools" inside this folder you will find a script name "WriteDeviceID" in order to set up the Arduino we need to write a Device ID to it's EEPROM which will be saved permamnetly and should be unique for all the timers in your network. If you open up the script you will find a script like this
+```
+#include <EEPROM.h>
+#define DEVICE_ID <x>
+
+void setup(){
+    EEPROM.write(0, DEVICE_ID);
+}
+void loop(){}
+```
+In order to write your desired unique device ID to the Arudino simply change where the "<x>" is to the unique  device ID number you want and upload it to the Arduino
+ 
+#### Device Type
+and then upload the CLI script to your Arduino and you are done!
+
+### Operating System
+This project is based on using 
