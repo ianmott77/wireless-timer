@@ -8,15 +8,22 @@
   
 ## Hardware
 
-### Diagrams
+### Set Up
+
+#### Diagrams
 If you look in the diagarams folder you will find fritzing diagrams of how the different pieceies need to be set up. The Raspberry Pi (RPi) and Arduino are connected through two different connections, the serial pins (UART) and I2C.
 
 ## Software
- ### Raspberry Pi
+
+### Repositories
+
+ #### Raspberry Pi
  * WirelessTimer: https://github.com/ianmott77/wireless-timer-rpi
  * pi_power (modified): https://github.com/craic/pi_power (Big thanks to @craic!!)
  
- ### Arduino
+ #### Arduino
  * WierlessTimer: https://github.com/ianmott77/wireless-timer-arduino
  * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
  * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
+ 
+### Set Up
