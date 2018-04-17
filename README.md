@@ -15,9 +15,9 @@
 The idea behind the harware set up is that the Arduino is used for sensor's for the outside world while the Raspberry Pi (RPi) is responsible for handling the display as well as doing the information processing and storing information. 
 ## Set Up
 ### Starter Set Up
-![alt text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/starter%20breadboard.svg)
+![alt text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/starter_breadboard.svg)
 ### Finisher Set Up
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher%20breadboard.svg)
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher_breadboard.svg)
 #### Notes
 Wher wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD.
 
