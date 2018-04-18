@@ -1,20 +1,20 @@
 # Wireless Timer
  This project aims at maiking a wireless timing system that's primary use is for athletics. The project's main sport of focus to start is alpine ski racing. 
  
- # Sports[#sports]
- ## [1.1) Alpine Ski Racing](#ski-racing)
+ # Sports
+ ## Alpine Ski Racing
  In alpine ski racing a racer starts at the top of a run, and goes through a wand which starts thier time and the finish is triggered by "eye's" at the bottom. Finish eyes traditionally use some form of LASER or light break beam. During training sessions some teams will use wireless timing systems which are capabale of doing this task with no wired set up required. This is a great training tool as it can tell you who is going fastest and when people are improving, and most teams who have them are able to see more improvments. One issue with current systems is they are expensive, some of them are outdated and haven't been upgraded in decades, and many of them are not very user friendly. Thats why this project was born! The goal is to use Arduino's and Raspberry Pi's to to create a wireless timer which is cheaper, and aims at usability.
  
-# [2) Things You Should Know Before Continuing](#to-know)
+# Things You Should Know Before Continuing
 * How to solder
 * Basic C/C++ programming knowledge would be an asset (e.g. loops, constants)
 * Basic Knowledge of Linux systems (e.g. file system, terminal use)
 * How to upload Arduino libraries
 * How to import new Arduino libraries
 
-# [3) Hardware](#hardware)
+# Hardware
 The idea behind the harware set up is that the Arduino is used for sensor's for the outside world while the Raspberry Pi (RPi) is responsible for handling the display as well as doing the information processing and storing information. 
-## [3.1) Set Up](#hardware-setup)
+## Set Up
 ### Hardware Needed
 #### For All Pieces
 * Raspberry Pi Zero W (https://www.raspberrypi.org/products/raspberry-pi-zero-w/)
@@ -54,8 +54,8 @@ If you look in the diagarams folder you will find fritzing diagrams of how the d
 ##### Notes
 Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD. Another thing to note is that in my set up I used a 6600 mAH battery.
 
-# [4) Software](#software)
-## [4.1 Repositories](#repos)
+# Software
+## Repositories
 ### Raspberry Pi
 * WirelessTimer: https://github.com/ianmott77/wireless-timer-rpi
 * pi_power (modified): https://github.com/craic/pi_power (Big thanks to @craic!!)
@@ -63,7 +63,7 @@ Where the wires disapear in the diagram is where they connect to a Waveshare 4" 
 * WierlessTimer: https://github.com/ianmott77/wireless-timer-arduino
 * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
 * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
-## [4.2) Set Up](#software-setup)
+## Set Up
 ## Arduino
 To set up the the software for the Arduino start by downloading the WirelessTimer repo. The CLI folder contains the main program for the Arduino while the Conneciton folder contains the framework that it's built on. To install the program add the Connection library, the RadioHead library and the LIDARLite V3 library to the Arduino software (instruction here: https://www.arduino.cc/en/hacking/libraries).
 
