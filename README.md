@@ -106,4 +106,8 @@ The final set up step for an Arduino is to upload the CLI script. Once you have 
 This project uses Raspbian Stretch Lite (https://www.raspberrypi.org/downloads/raspbian/) as it's base but requires several steps to set up. In future this wil all be rolled in to a custom image but currently requires manual set up.
 #### Configuring Raspbian
 ##### Downloading and seting up the MicroSD
-In order to set up the Wireless timer software you first need to write the Raspbian Lite image to a micro SD card which is compatible with Raspberry Pi Zero W's (most micro SD's should work). If you're not sure how to do this you can find detailed instructions [here]: https://www.raspberrypi.org/documentation/installation/installing-images/
+In order to set up the Wireless timer software you first need to write the Raspbian Lite image to a micro SD card which is compatible with Raspberry Pi Zero W's (most micro SD's should work). If you're not sure how to do this you can find detailed instructions [here](https://www.raspberrypi.org/documentation/installation/installing-images/).
+#### Installing Display Drivers
+The Waveshare screen should work with and HDMI connection from the RPi by default however the display may be the wrong orientatation and it may be the wrong resolution, and the touch functionality won't work properly. You can follow the instructions found [here](https://www.waveshare.com/wiki/4inch_HDMI_LCD) to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```.
+
+
