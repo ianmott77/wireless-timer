@@ -61,7 +61,7 @@ Where the wires disapear in the diagram is where they connect to a Waveshare 4" 
 * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
 * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
 ## Set Up
-### Arduino
+## Arduino
 To set up the the software for the Arduino start by downloading the WirelessTimer repo. The CLI folder contains the main program for the Arduino while the Conneciton folder contains the framework that it's built on. To install the program add the Connection library to the Arduino software (instruction here: https://www.arduino.cc/en/hacking/libraries).
 
 #### Device ID
@@ -99,7 +99,7 @@ In order to set the device type of the Arduino simply change the "x" in the scri
 #### CLI
 The final set up step for an Arduino is to upload the CLI script. Once you have done that you are done!
 
-### Raspberry Pi
+## Raspberry Pi
 #### Operating System
 This project uses Raspbian Stretch Lite (https://www.raspberrypi.org/downloads/raspbian/) as it's base but requires several steps to set up. In future this wil all be rolled in to a custom image but currently requires manual set up.
 #### Configuring Raspbian 
