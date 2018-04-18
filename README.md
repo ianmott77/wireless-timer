@@ -24,6 +24,7 @@ The idea behind the harware set up is that the Arduino is used for sensor's for 
 * MCP3008 - 8-Channel 10-Bit ADC With SPI Interface (https://www.adafruit.com/product/856)
 * PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A - 1000C (https://www.adafruit.com/product/2465)
 * Lithium Ion Battery Pack - 3.7V 6600mAh (https://www.adafruit.com/product/353)
+* 1 x MicroSD Card
 * 4 x 10k resistor
 * 3 x 4001N diode
 * 3 x 330 Ohm resistor
@@ -61,7 +62,7 @@ Where the wires disapear in the diagram is where they connect to a Waveshare 4" 
 * WierlessTimer: https://github.com/ianmott77/wireless-timer-arduino
 * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
 * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
-## Set Up
+## Set Up 
 ## Arduino
 To set up the the software for the Arduino start by downloading the WirelessTimer repo. The CLI folder contains the main program for the Arduino while the Conneciton folder contains the framework that it's built on. To install the program add the Connection library to the Arduino software (instruction here: https://www.arduino.cc/en/hacking/libraries).
 
@@ -103,4 +104,6 @@ The final set up step for an Arduino is to upload the CLI script. Once you have 
 ## Raspberry Pi
 ### Operating System
 This project uses Raspbian Stretch Lite (https://www.raspberrypi.org/downloads/raspbian/) as it's base but requires several steps to set up. In future this wil all be rolled in to a custom image but currently requires manual set up.
-#### Configuring Raspbian 
+#### Configuring Raspbian
+##### Downloading and seting up the MicroSD
+In order to set up the Wireless timer software you first need to write the Raspbian Lite image (https://downloads.raspberrypi.org/raspbian_lite_latest) to a micro SD card which is compatible with Raspberry Pi Zero W's (most micro SD's should work). If you're not sure how to do this you can find detailed instructions here https://www.raspberrypi.org/documentation/installation/installing-images/
