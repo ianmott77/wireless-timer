@@ -1,6 +1,7 @@
-# Wireless Timer
 ###### Author: Ian Mott
- This project aims at maiking a wireless timing system that's primary use is for athletics. The project's main sport of focus to start is alpine ski racing. 
+
+# Wireless Timer
+This project aims at maiking a wireless timing system that's primary use is for athletics. The project's main sport of focus to start is alpine ski racing. 
  # Contents
  1. [Sports](#sports)
  2. [Things to know](#things-you-should-know-before-continuing)
