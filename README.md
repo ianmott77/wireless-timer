@@ -6,10 +6,11 @@ This project aims at maiking a wireless timing system that's primary use is for 
  1. [Sports](#sports)
  2. [Features](#features)
  3. [Video](#video)
- 3. [Things to know](#things-you-should-know-before-continuing-with-setup)
- 4. [Hardware](#hardware)
- 5. [Software](#software)
- 6. [Screenshots](#screenshots)
+ 4. [Things to know](#things-you-should-know-before-continuing-with-setup)
+ 5. [Hardware](#hardware)
+ 6. [Software](#software)
+ 7. [Usage](#using-the-wireless-timer)
+ 8. [Screenshots](#screenshots)
  
  # Sports
  ## Alpine Ski Racing
@@ -77,7 +78,11 @@ If you look in the diagarams folder you will find fritzing diagrams of how the d
 ##### Notes
 * Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD
 * In my set up I used a 6600 mAH battery
+* Yellow LED is the TX LED for the Arduino
+* Blue LED is the RX LED for the Arduino
+* Red LED is the error LED for the Arduino
 * The LCD get's it's own 5V power supply from the PowerBoost because it draws a large current and when it get's it's power from a the rail on the breadboard I observed some flickering
+
 # Software
 ## Repositories
 All of them are required to run the WirelessTimer software, however for pi_power it is suggested that you use the script provided in this repository as it has been modified to accomidate the different battery voltage and different pins used.
@@ -128,7 +133,7 @@ void loop(){}
 In order to set the device type of the Arduino simply change the "x" in the script to the device type of you need and upload it to the Arduino. The device type will be save permanently to the Arduino, after you run this script once you won't have to run it on an Arduino again unless you are changing it's device ID.
 
 #### CLI
-The final set up step for an Arduino is to upload the CLI script. Once you have done that you are done!
+The final set up step for an Arduino is to upload the CLI script. Once you have done that the setup is complete. If everything is wired correctly you should see all threee lights blink once, and nothing should be displayed on the serial monitor in the Arduino IDE if you have that open.
 
 ## Raspberry Pi
 ### Operating System
@@ -181,7 +186,54 @@ Once QT has been successfully installed the following QT modules also need to be
 
 if you have followed all the instructions correclty you should have a kit setup where you can upload compiled Qt programs to your RPi.
 
-Now all you need to do is download the WirelessTimer repo and import the porject folder and it should be able to run the program.
+# Using The Wireless Timer
+### Running the WirelessTimer program
+If at any point you are not sure if you are on the right page  you can refer to the screenshot section bellow to confirm.
+
+#### Import the project
+In order to get started you first need to download the software here:
+* https://github.com/ianmott77/wireless-timer-rpi
+once it is downloaded you need to import it as project to Qt.
+
+#### Running the program
+When the prgram runs you will notice the yellow and blue LED's blink frequently, this is because they blink every time there is an interaction either between the two Arduino's via LoRa or locally between the Arduino and the RPi. If the red LED blinks three times that means that is has hit an error, and which ever other LED is alows lit while it's blinking idicates wheather the error was while transmitting (yellow LED) or receiving (blue LED).
+
+##### Setting the Finish
+You will notice on interval pieces that the screen will automatically go the the "Set Finish Distance" page. In order to set the distance you simply click start and the LIDAR Lite will start measuring distances and reporting it back to the RPi. Point the LIDAR Lite at an object where you would like to line up your finish line and hit set. If you hit cancel if will set the distance to whatever it was set at last, if nothing was set then it will go back to 0.
+
+#### Synchrnizing Devices
+On all device you will noticce that there is a "Status" page. On the "Status" page you will see that there is both a "Position" and a "ID". The "Position" on all devices will default to 1, and the device ID of each device is set permamntly by writing it to the EEPROM of the Arduino when you set it up. 
+
+##### Position
+Becaue the network is set up similarly to a doubly linked list(https://en.wikipedia.org/wiki/Doubly_linked_list), every device knows about the device that is at the position previous to it and the the device that is at the next position. Because currently only a start and finish are supported there are only two positions that are relavant:
+1: Start
+2: Finish
+and because currently you are always adding the finish from the start you always want the position you are adding to be 2.
+
+#### Device ID
+This is the device ID you specified when setting up the Arduino. This can be found on the status page of the finish device.
+
+In order to syncronize the device enter the position you want to add to the network (2) and the device ID of the the device you want to add. For example if I had a Start piece which had the ID=4, and a finish piece with the ID=9, on the "Add Device" page I would want to tap the text box I want to edit and for "Device Position:" I would enter 2, and for "Divece ID" I would enter 9.
+
+Once the sync is complete you will notice that in the status bar of both devices that the red circle next to "Sync:" are now green. This indicates that the sync was successful.
+
+#### Selecting a Mode
+The WirelessTimer software offers differnt modes in which to time, currently it offers stopwatch mode, and pace mode. On the "Mode Select Page" you will find a button for both of these options, and if you go to the "Options" page you will find a button "Select Mode" which allows you to return to the "Mode Select" page if you would like to switch from one mode to the other.
+
+##### Stopwatch
+This mode is the most basic mode in which to time. The times start as soon as the magnetic contact opens and will stop when somthing makes the LIDAR Lite pick up a distance less then 15cm of what the finish distance was set to. You als have to option to manually DNF (Did Not Finish) the racer as well if they wont be completing the run. This mode allows for as many people on course as you would like and will not automatically DNF anyone.
+
+##### Pace
+In pace mode a refrence time is used to determine weather or not something crossing the finish line is likley to be the thing we expect to be crossing the line. Currently the threashold to test against the pace time is 10 seconds. For example if you select pace mode the first person to go down the course will have their finish time recorded as the pace time,and from then on when someone starts the time any thing that triggers the finish which is 10 seconds faster than the pace time will not trigger the finish, and if the time goes more then 10 seconds over the pace time then the finish will automatically trigger a DNF.
+
+#### Starting a racer
+Once you know which mode you would like and select that button a keyboard will appear with a text box above it. The text box holds the bib number of the racer about to start and defaults to 1. If the start is not syncronized the "Okay" button will be grey and disabled, if it is green the it is ready to go!
+
+##### Stopwatch Mode
+In stopwatch mode it is very straight forward you simply enter a bib number, hit "Okay" and open the megnetic contact switch and the time will be started. You can do as many racers on the track at one time as you would like.
+
+##### Pace Mode
+In Pace mode you will enter the number of the bib you would like to, hit "Okay", and then open the magnetic contact switch, however in pace mode if there is no pace time set then the start will stay with the "Ready!" page with a loading indicator bellow it unitl the racer completes there run, at which point the time of the racer will be transmitted back to the start, and from then on the pace will be set at the first runners time, and the threashold will be 10 seconds. If the person setting the pace does not complete their run you can maually click "DNF" on the finish piece which will let the start know that a pace wasn't set and then the next racer will set the pace.
 
 # Screenshots
 #### Mode Select
