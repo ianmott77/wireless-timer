@@ -80,6 +80,8 @@ If you look in the diagarams folder you will find fritzing diagrams of how the d
 * The LCD get's it's own 5V power supply from the PowerBoost because it draws a large current and when it get's it's power from a the rail on the breadboard I observed some flickering
 # Software
 ## Repositories
+All of them are required to run the WirelessTimer software, however for pi_power it is suggested that you use the script provided in this repository as it has been modified to accomidate the different battery voltage and different pins used.
+
 ### Raspberry Pi
 * WirelessTimer: https://github.com/ianmott77/wireless-timer-rpi
 * pi_power (modified): https://github.com/craic/pi_power (Big thanks to @craic!!)
