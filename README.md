@@ -75,8 +75,9 @@ If you look in the diagarams folder you will find fritzing diagrams of how the d
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher%20breadboard.png)
 
 ##### Notes
-Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD. Another thing to note is that in my set up I used a 6600 mAH battery.
-
+* Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD
+* In my set up I used a 6600 mAH battery
+* The LCD get's it's own 5V power supply from the PowerBoost because it draws a large current and when it get's it's power from a the rail on the breadboard I observed some flickering
 # Software
 ## Repositories
 ### Raspberry Pi
@@ -144,7 +145,6 @@ The Waveshare screen should work with and HDMI connection from the RPi by defaul
 to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```. If you are not getting any input when touching the screen, check the connection and that you have the screen connected to the proper pins on the RPi.
 
 #### Setting up pi_power
-
 In order to set up pi power you can follow the instructions here however read bellow for the modifications made for this project:
 
 * https://github.com/craic/pi_power
@@ -168,7 +168,7 @@ In order for the WirelessTimer program QT needs to be installed on the raspbery 
 
 * https://wiki.qt.io/RaspberryPi2EGLFS
 
-This process can take several hours so be patient and pay careful attention that you are doing the steps correctly. 
+Note when setting up with a Raspberry Pi Zero or Zero W you will use the same compile commands as the Raspberry Pi 1. This process can take several hours so be patient and pay careful attention that you are doing the steps correctly. 
 
 Once QT has been successfully installed the following QT modules also need to be installed:
 * Qt Declarative (https://github.com/qt/qtdeclarative)
