@@ -112,4 +112,9 @@ In order to set up the Wireless timer software you first need to write the Raspb
 The Waveshare screen should work with and HDMI connection from the RPi by default however the display may be the wrong orientatation and it may be the wrong resolution, and the touch functionality won't work properly. You can follow the instructions found [here](https://www.waveshare.com/wiki/4inch_HDMI_LCD) to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```. If you are not getting any input when touching the screen, check the connection and that you have the screen connected to the proper pins on the RPi.
 
 ### Setting up QT and EGLFS
-In order for the WirelessTimer program QT needs to be installed on the raspbery pi's. Detailed instructions can be found [here](https://wiki.qt.io/RaspberryPi2EGLFS) 
+In order for the WirelessTimer program QT needs to be installed on the raspbery pi's. Detailed instructions can be found [here](https://wiki.qt.io/RaspberryPi2EGLFS). This process can take several hours so be patient and pay careful attention that you are doing the steps correctly.
+
+Once QT has been successfully installed the following QT modules also need to be installed:
+* Qt Declarative (https://github.com/qt/qtdeclarative)
+* Qt Quick Controls 2 (https://github.com/qt/qtquickcontrols2)
+* Qt Quick Virtual Keyboard (https://github.com/qt/qtvirtualkeyboard) (not used currently but will be in future)
