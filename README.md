@@ -14,10 +14,33 @@
 # Hardware
 The idea behind the harware set up is that the Arduino is used for sensor's for the outside world while the Raspberry Pi (RPi) is responsible for handling the display as well as doing the information processing and storing information. 
 ## Set Up
+
+### Hardware Needed
+#### For All Pieces
+* Raspberry Pi Zero W (https://www.raspberrypi.org/products/raspberry-pi-zero-w/)
+* Arduino UNO (https://store.arduino.cc/usa/arduino-uno-rev3)
+* Adafruit RFM95W LoRa Radio Transceiver Breakout - 868 or 915 MHz (https://www.adafruit.com/product/3072)
+* 4-channel I2C-safe Bi-directional Logic Level Converter (https://www.adafruit.com/product/757)
+* MCP3008 - 8-Channel 10-Bit ADC With SPI Interface (https://www.adafruit.com/product/856)
+* PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A - 1000C (https://www.adafruit.com/product/2465)
+* Lithium Ion Battery Pack - 3.7V 6600mAh (https://www.adafruit.com/product/353)
+* 4 x 10k resistor
+* 3 x 4001N diode
+* 3 x 330 Ohm resistor
+* 2 x 6.8k resistor
+* 1 x 100k resistor
+* 1 x Momentary push button 
+
+#### Interval Only
+* LIDAR-Lite v3 (https://www.sparkfun.com/products/14032)
+
+#### Starter Only
+* Magnetic contact switch (https://www.adafruit.com/product/375)
+
 ### Starter Set Up
-![alt text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/starter_breadboard.svg)
+![alt text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/starter%20breadboard.png)
 ### Finisher Set Up
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher_breadboard.svg)
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher%20breadboard.png)
 #### Notes
 Wher wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD.
 
@@ -45,7 +68,8 @@ Inside the repo you will also find a folder named "tools" inside this folder you
 void setup(){
     EEPROM.write(0, DEVICE_ID);
 }
-void loop(){}
+void loop(){}1
+
 ```
 In order to write your desired unique device ID to the Arudino simply change where the "x" is to the unique device ID number you want and upload it to the Arduino. The device ID will be save permanently to the Arduino,after you run this script once you won't have to run it on an Arduino again unless you are changing it's device type.
 
