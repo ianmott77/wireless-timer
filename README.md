@@ -19,7 +19,7 @@ This project aims at maiking a wireless timing system that's primary use is for 
 * Wireless Timing via LoRa line of site up to 10km
 * Start and Finish currently, plans to support monitor tablet and multiple intervals
 * Pace Mode
-* Finish distance of up to 40m
+* Finish line length of up to 40m
 * Virtually unimited number of people on the track at one time
 * Virtually unlimited space for runs
 * Resistve touch screen used to allow for beautiful UI while still allowing people to use glove or hand protection
