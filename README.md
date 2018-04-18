@@ -187,15 +187,14 @@ Once QT has been successfully installed the following QT modules also need to be
 if you have followed all the instructions correclty you should have a kit setup where you can upload compiled Qt programs to your RPi.
 
 # Using The Wireless Timer
-### Running the WirelessTimer program
 If at any point you are not sure if you are on the right page  you can refer to the screenshot section bellow to confirm.
 
-#### Import the project
+### Import the project
 In order to get started you first need to download the software here:
 * https://github.com/ianmott77/wireless-timer-rpi
 once it is downloaded you need to import it as project to Qt.
 
-#### Running the program
+### Running the program
 When the prgram runs you will notice the yellow and blue LED's blink frequently, this is because they blink every time there is an interaction either between the two Arduino's via LoRa or locally between the Arduino and the RPi. If the red LED blinks three times that means that is has hit an error, and which ever other LED is also lit while it's blinking idicates wheather the error was while transmitting (yellow LED) or receiving (blue LED).
 
 ##### Setting the Finish
