@@ -73,8 +73,7 @@ Inside the repo you will also find a folder named "tools" inside this folder you
 void setup(){
     EEPROM.write(0, DEVICE_ID);
 }
-void loop(){}1
-
+void loop(){}
 ```
 In order to write your desired unique device ID to the Arudino simply change where the "x" is to the unique device ID number you want and upload it to the Arduino. The device ID will be save permanently to the Arduino,after you run this script once you won't have to run it on an Arduino again unless you are changing it's device type.
 
@@ -101,5 +100,6 @@ In order to set the device type of the Arduino simply change the "x" in the scri
 The final set up step for an Arduino is to upload the CLI script. Once you have done that you are done!
 
 ### Raspberry Pi
-### Operating System
-This project is based on using 
+#### Operating System
+This project uses Raspbian Stretch Lite (https://www.raspberrypi.org/downloads/raspbian/) as it's base but requires several steps to set up. In future this wil all be rolled in to a custom image but currently requires manual set up.
+#### Configuring Raspbian 
