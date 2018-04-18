@@ -18,6 +18,7 @@ The idea behind the harware set up is that the Arduino is used for sensor's for 
 #### For All Pieces
 * Raspberry Pi Zero W (https://www.raspberrypi.org/products/raspberry-pi-zero-w/)
 * Arduino UNO (https://store.arduino.cc/usa/arduino-uno-rev3)
+* Waveshare 4inch HDMI LCD, 800×480, IPS (https://www.waveshare.com/4inch-HDMI-LCD.htm)
 * Adafruit RFM95W LoRa Radio Transceiver Breakout - 868 or 915 MHz (https://www.adafruit.com/product/3072)
 * 4-channel I2C-safe Bi-directional Logic Level Converter (https://www.adafruit.com/product/757)
 * MCP3008 - 8-Channel 10-Bit ADC With SPI Interface (https://www.adafruit.com/product/856)
