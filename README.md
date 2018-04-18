@@ -84,11 +84,13 @@ All of them are required to run the WirelessTimer software, however for pi_power
 
 ### Raspberry Pi
 * WirelessTimer: https://github.com/ianmott77/wireless-timer-rpi
-* pi_power (modified): https://github.com/craic/pi_power (Big thanks to @craic!!)
+* pi_power (modified):https://github.com/ianmott77/wireless-timer/blob/master/pi_power.py (Big thanks to @craic!! Origina repo found here https://github.com/craic/pi_power)
+
 ### Arduino
 * WierlessTimer: https://github.com/ianmott77/wireless-timer-arduino
 * RadioHead: http://www.airspayce.com/mikem/arduino/RadioHead/
 * LIDARLite V3: https://github.com/garmin/LIDARLite_v3_Arduino_Library
+
 ## Set Up
 ## Arduino
 To set up the the software for the Arduino start by downloading the WirelessTimer repo. The CLI folder contains the main program for the Arduino while the Conneciton folder contains the framework that it's built on. To install the program add the Connection library, the RadioHead library and the LIDARLite V3 library to the Arduino software (instruction here: https://www.arduino.cc/en/hacking/libraries).
