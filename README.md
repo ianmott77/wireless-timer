@@ -106,16 +106,42 @@ The final set up step for an Arduino is to upload the CLI script. Once you have 
 This project uses Raspbian Stretch Lite (https://www.raspberrypi.org/downloads/raspbian/) as it's base but requires several steps to set up. In future this wil all be rolled in to a custom image but currently requires manual set up.
 #### Configuring Raspbian
 ##### Downloading and seting up the MicroSD
-In order to set up the Wireless timer software you first need to write the Raspbian Lite image to a micro SD card which is compatible with Raspberry Pi Zero W's (most micro SD's should work). If you're not sure how to do this you can find detailed instructions [here](https://www.raspberrypi.org/documentation/installation/installing-images/). To login the default username for the OS is "pi" and the default password is "raspberry"
+In order to set up the Wireless timer software you first need to write the Raspbian Lite image to a micro SD card which is compatible with Raspberry Pi Zero W's (most micro SD's should work). If you're not sure how to do this you can find detailed instructions here:
+
+* https://www.raspberrypi.org/documentation/installation/installing-images/
+
+To login the default username for the OS is "pi" and the default password is "raspberry"
 
 #### Installing Display Drivers
-The Waveshare screen should work with and HDMI connection from the RPi by default however the display may be the wrong orientatation and it may be the wrong resolution, and the touch functionality won't work properly. You can follow the instructions found [here](https://www.waveshare.com/wiki/4inch_HDMI_LCD) to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```. If you are not getting any input when touching the screen, check the connection and that you have the screen connected to the proper pins on the RPi.
+The Waveshare screen should work with and HDMI connection from the RPi by default however the display may be the wrong orientatation and it may be the wrong resolution, and the touch functionality won't work properly. You can follow the instructions found here:
+
+* https://www.waveshare.com/wiki/4inch_HDMI_LCD
+
+to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```. If you are not getting any input when touching the screen, check the connection and that you have the screen connected to the proper pins on the RPi.
+
+#### Setting up pi_power
+In order to use pi_power with this project some modifications were needed. in pi_power GPIO14 is used to power up the RPi because it goes high when booting up but goes low when powering down, however GPIO14 is the TX pin for the RPi and used in by the Arduino in order to communcate. In order to accomidate this we simulate GPIO12 going high when booting by using a custom device tree blob, detailed instructions on how to set this up can be found here: 
+
+* https://www.raspberrypi.org/documentation/configuration/pin-configuration.md
+
+In order to set up pi power you can follow the instructions here:
+
+* https://github.com/craic/pi_power
+
+however the scrpipt hosted in this respository is set up to use GPIO12 for boot up and GPIO13 to repace GPIO25, because GPIO25 is used by the touch screen, and the max and minmum voltages are adjusted for the battery I used.
 
 #### Setting up QT and EGLFS
 Currently the only way to use this project is to build the WirelessTimer from scratch and currenty the only host system tested so far is Ubuntu 17.10.
 
-The Raspberry Pi portion of the project is based on QT. You can download QT for free [here](https://www.qt.io/download-qt-installer?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5). 
-In order for the WirelessTimer program QT needs to be installed on the raspbery pi's. Detailed instructions can be found [here](https://wiki.qt.io/RaspberryPi2EGLFS). This process can take several hours so be patient and pay careful attention that you are doing the steps correctly. 
+The Raspberry Pi portion of the project is based on QT. You can download QT for free here: 
+
+* https://www.qt.io/download-qt-installer?hsCtaTracking=9f6a2170-a938-42df-a8e2-a9f0b1d6cdce%7C6cb0de4f-9bb5-4778-ab02-bfb62735f3e5 
+
+In order for the WirelessTimer program QT needs to be installed on the raspbery pi's. Detailed instructions can be found here:
+
+* https://wiki.qt.io/RaspberryPi2EGLFS
+
+This process can take several hours so be patient and pay careful attention that you are doing the steps correctly. 
 
 Once QT has been successfully installed the following QT modules also need to be installed:
 * Qt Declarative (https://github.com/qt/qtdeclarative)
