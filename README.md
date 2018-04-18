@@ -7,26 +7,10 @@ This project aims at maiking a wireless timing system that's primary use is for 
  2. [Things to know](#things-you-should-know-before-continuing)
  3. [Hardware](#hardware)
  4. [Software](#software)
+ 5. [Screenshots](#screenshots)
  # Sports
  ## Alpine Ski Racing
  In alpine ski racing a racer starts at the top of a run, and goes through a wand which starts thier time and the finish is triggered by "eye's" at the bottom. Finish eyes traditionally use some form of LASER or light break beam. During training sessions some teams will use wireless timing systems which are capabale of doing this task with no wired set up required. This is a great training tool as it can tell you who is going fastest and when people are improving, and most teams who have them are able to see more improvments. One issue with current systems is they are expensive, some of them are outdated and haven't been upgraded in decades, and many of them are not very user friendly. Thats why this project was born! The goal is to use Arduino's and Raspberry Pi's to to create a wireless timer which is cheaper, and aims at usability.
-# Screenshots
-###### Mode Select
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225527.jpg)
-###### Set Finish Distance
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225653.jpg)
-###### Choose Bib Number
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230115.jpg)
-###### Status
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230125.jpg)
-###### Add Device
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230142.jpg)
-###### Options
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230151.jpg)
-###### Time of Next to Finish
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230221.jpg)
-###### View All Times
-![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_231514.jpg)
 
 # Things You Should Know Before Continuing
 * How to solder
@@ -178,3 +162,21 @@ Once QT has been successfully installed the following QT modules also need to be
 if you have followed all the instructions correclty you should have a kit setup where you can upload compiled Qt programs to your RPi.
 
 Now all you need to do is download the WirelessTimer repo and import the porject folder and it should be able to run the program.
+
+# Screenshots
+###### Mode Select
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225527.jpg)
+###### Set Finish Distance
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225653.jpg)
+###### Choose Bib Number
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230115.jpg)
+###### Status
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230125.jpg)
+###### Add Device
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230142.jpg)
+###### Options
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230151.jpg)
+###### Time of Next to Finish
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230221.jpg)
+###### View All Times
+![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_231514.jpg)
