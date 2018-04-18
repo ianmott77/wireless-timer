@@ -160,4 +160,4 @@ if you have followed all the instructions correclty you should have a kit setup 
 
 Now all you need to do is download the WirelessTimer repo and import the porject folder and it should be able to run the program.
 
-Author: Ian Mott
+###### Author: Ian Mott
