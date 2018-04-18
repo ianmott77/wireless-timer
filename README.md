@@ -6,7 +6,7 @@ This project aims at maiking a wireless timing system that's primary use is for 
  1. [Sports](#sports)
  2. [Features](#features)
  3. [Video](#video)
- 3. [Things to know](#things-you-should-know-before-continuing)
+ 3. [Things to know](#things-you-should-know-before-continuing-with-setup)
  4. [Hardware](#hardware)
  5. [Software](#software)
  6. [Screenshots](#screenshots)
@@ -15,8 +15,9 @@ This project aims at maiking a wireless timing system that's primary use is for 
  ## Alpine Ski Racing
  In alpine ski racing a racer starts at the top of a run, and goes through a wand which starts thier time and the finish is triggered by "eye's" at the bottom. Finish eyes traditionally use some form of LASER or light break beam. During training sessions some teams will use wireless timing systems which are capabale of doing this task with no wired set up required. This is a great training tool as it can tell you who is going fastest and when people are improving, and most teams who have them are able to see more improvments. One issue with current systems is they are expensive, some of them are outdated and haven't been upgraded in decades, and many of them are not very user friendly. Thats why this project was born! The goal is to use Arduino's and Raspberry Pi's to to create a wireless timer which is cheaper, and aims at usability.
 
-# Features
+# Features 
 * Wireless Timing via LoRa line of site up to 10km
+* Start and Finish currently, plans to support monitor tablet and multiple intervals
 * Pace Mode
 * Finish distance of up to 40m
 * Virtually unimited number of people on the track at one time
@@ -27,7 +28,7 @@ This project aims at maiking a wireless timing system that's primary use is for 
 Below is a link to a youtube video demonstrating simple usage and proof of work for the idea:
 * https://youtu.be/bO8R6ozuvQg
 
-# Things You Should Know Before Continuing
+# Things You Should Know Before Continuing With Setup
 * How to solder
 * Basic C/C++ programming knowledge would be an asset (e.g. loops, constants)
 * Basic Knowledge of Linux systems (e.g. file system, terminal use)
@@ -179,19 +180,19 @@ if you have followed all the instructions correclty you should have a kit setup 
 Now all you need to do is download the WirelessTimer repo and import the porject folder and it should be able to run the program.
 
 # Screenshots
-###### Mode Select
+#### Mode Select
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225527.jpg)
-###### Set Finish Distance
+#### Set Finish Distance
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_225653.jpg)
-###### Choose Bib Number
+#### Choose Bib Number
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230115.jpg)
-###### Status
+#### Status
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230125.jpg)
-###### Add Device
+#### Add Device
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230142.jpg)
-###### Options
+#### Options
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230151.jpg)
-###### Time of Next to Finish
+#### Time of Next to Finish
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_230221.jpg)
-###### View All Times
+#### View All Times
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Screenshots/IMG_20180417_231514.jpg)
