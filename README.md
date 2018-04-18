@@ -120,15 +120,18 @@ The Waveshare screen should work with and HDMI connection from the RPi by defaul
 to setup the display properly. Once the drivers are installed you can test wheather or not it is working with the program evtest. evtest is used to test input. It can be installed by typing```sudo apt-get install evtest``` and it can be run by typing ```evtest```. If you are not getting any input when touching the screen, check the connection and that you have the screen connected to the proper pins on the RPi.
 
 #### Setting up pi_power
-In order to use pi_power with this project some modifications were needed. in pi_power GPIO14 is used to power up the RPi because it goes high when booting up but goes low when powering down, however GPIO14 is the TX pin for the RPi and used in by the Arduino in order to communcate. In order to accomidate this we simulate GPIO12 going high when booting by using a custom device tree blob, detailed instructions on how to set this up can be found here: 
 
-* https://www.raspberrypi.org/documentation/configuration/pin-configuration.md
-
-In order to set up pi power you can follow the instructions here:
+In order to set up pi power you can follow the instructions here however read bellow for the modifications made for this project:
 
 * https://github.com/craic/pi_power
 
 however the scrpipt hosted in this respository is set up to use GPIO12 for boot up and GPIO13 to repace GPIO25, because GPIO25 is used by the touch screen, and the max and minmum voltages are adjusted for the battery I used.
+
+In pi_power GPIO14 is used to power up the RPi because it goes high when booting up but goes low when powering down, however GPIO14 is the TX pin for the RPi and used by the Arduino to communcate. In order to accomidate this we simulate GPIO12 going high when booting by using a custom device tree blob, detailed instructions on how to set this up can be found here: 
+
+* https://www.raspberrypi.org/documentation/configuration/pin-configuration.md
+
+in order to simulate GPIO12 going high when the RPi boot's we set it to output mode, and active. I have provided a dt-blob.dts in this repo which does that and should allow GPIO12 to be high after holding the momentary push button for a couple second and will go low when the RPi shuts down.
 
 #### Setting up QT and EGLFS
 Currently the only way to use this project is to build the WirelessTimer from scratch and currenty the only host system tested so far is Ubuntu 17.10.
