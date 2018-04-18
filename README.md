@@ -196,7 +196,7 @@ In order to get started you first need to download the software here:
 once it is downloaded you need to import it as project to Qt.
 
 #### Running the program
-When the prgram runs you will notice the yellow and blue LED's blink frequently, this is because they blink every time there is an interaction either between the two Arduino's via LoRa or locally between the Arduino and the RPi. If the red LED blinks three times that means that is has hit an error, and which ever other LED is alows lit while it's blinking idicates wheather the error was while transmitting (yellow LED) or receiving (blue LED).
+When the prgram runs you will notice the yellow and blue LED's blink frequently, this is because they blink every time there is an interaction either between the two Arduino's via LoRa or locally between the Arduino and the RPi. If the red LED blinks three times that means that is has hit an error, and which ever other LED is also lit while it's blinking idicates wheather the error was while transmitting (yellow LED) or receiving (blue LED).
 
 ##### Setting the Finish
 You will notice on interval pieces that the screen will automatically go the the "Set Finish Distance" page. In order to set the distance you simply click start and the LIDAR Lite will start measuring distances and reporting it back to the RPi. Point the LIDAR Lite at an object where you would like to line up your finish line and hit set. If you hit cancel if will set the distance to whatever it was set at last, if nothing was set then it will go back to 0.
