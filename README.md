@@ -233,7 +233,7 @@ Once you know which mode you would like and select that button a keyboard will a
 In stopwatch mode it is very straight forward you simply enter a bib number, hit "Okay" and open the megnetic contact switch and the time will be started. You can do as many racers on the track at one time as you would like.
 
 ##### Pace Mode
-In Pace mode you will enter the number of the bib you would like to, hit "Okay", and then open the magnetic contact switch, however in pace mode if there is no pace time set then the start will stay with the "Ready!" page with a loading indicator bellow it unitl the racer completes there run, at which point the time of the racer will be transmitted back to the start, and from then on the pace will be set at the first runners time, and the threashold will be 10 seconds. If the person setting the pace does not complete their run you can maually click "DNF" on the finish piece which will let the start know that a pace wasn't set and then the next racer will set the pace.
+In pace mode you will enter the number of the bib you would like to, hit "Okay", and then open the magnetic contact switch, however in pace mode if there is no pace time set then the start will stay with the "Ready!" page with a loading indicator bellow it unitl the racer completes there run, at which point the time of the racer will be transmitted back to the start, and from then on the pace will be set at the first runners time, and the threashold will be 10 seconds. If the person setting the pace does not complete their run you can maually click "DNF" on the finish piece which will let the start know that a pace wasn't set and then the next racer will set the pace.
 
 # Screenshots
 #### Mode Select
