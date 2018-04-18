@@ -159,3 +159,5 @@ Once QT has been successfully installed the following QT modules also need to be
 if you have followed all the instructions correclty you should have a kit setup where you can upload compiled Qt programs to your RPi.
 
 Now all you need to do is download the WirelessTimer repo and import the porject folder and it should be able to run the program.
+
+Author: Ian Mott
