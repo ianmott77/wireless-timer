@@ -210,7 +210,7 @@ Becaue the network is set up similarly to a doubly linked list(https://en.wikipe
 2: Finish
 and because currently you are always adding the finish from the start you always want the position you are adding to be 2.
 
-#### Device ID
+##### Device ID
 This is the device ID you specified when setting up the Arduino. This can be found on the status page of the finish device.
 
 In order to syncronize the device enter the position you want to add to the network (2) and the device ID of the the device you want to add. For example if I had a Start piece which had the ID=4, and a finish piece with the ID=9, on the "Add Device" page I would want to tap the text box I want to edit and for "Device Position:" I would enter 2, and for "Divece ID" I would enter 9.
