@@ -1,4 +1,4 @@
-# wireless-timer
+# Wireless Timer
  This project aims at maiking a wireless timing system that's primary use is for athletics. The project's main sport of focus to start is alpine ski racing.
  # Sports
  ## Alpine Ski Racing
