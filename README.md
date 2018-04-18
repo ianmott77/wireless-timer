@@ -14,7 +14,6 @@
 # Hardware
 The idea behind the harware set up is that the Arduino is used for sensor's for the outside world while the Raspberry Pi (RPi) is responsible for handling the display as well as doing the information processing and storing information. 
 ## Set Up
-
 ### Hardware Needed
 #### For All Pieces
 * Raspberry Pi Zero W (https://www.raspberrypi.org/products/raspberry-pi-zero-w/)
@@ -30,20 +29,28 @@ The idea behind the harware set up is that the Arduino is used for sensor's for 
 * 2 x 6.8k resistor
 * 1 x 100k resistor
 * 1 x Momentary push button 
+* 1 x Yellow LED
+* 1 x Red LED
+* 1 x Blue LED
 
 #### Interval Only
 * LIDAR-Lite v3 (https://www.sparkfun.com/products/14032)
 
 #### Starter Only
 * Magnetic contact switch (https://www.adafruit.com/product/375)
+
 ### Diagrams
 If you look in the diagarams folder you will find fritzing diagrams of how the different pieceies need to be set up. The RPi and Arduino are connected through two different connections, the serial pins (UART) and I2C.
+
 #### Starter Set Up
 ![alt text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/starter%20breadboard.png)
+
 #### Finisher Set Up
 ![alt_text](https://raw.githubusercontent.com/ianmott77/wireless-timer/master/Diagrams/finisher%20breadboard.png)
+
 ##### Notes
-Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD. Another thing to note is that in my set up I used a 6600 mAH battery,
+Where the wires disapear in the diagram is where they connect to a Waveshare 4" resitive touchscreen LCD. Another thing to note is that in my set up I used a 6600 mAH battery.
+
 # Software
 ## Repositories
 ### Raspberry Pi
