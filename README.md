@@ -48,16 +48,16 @@ The idea behind the harware set up is that the Arduino is used for sensor's for 
 * MCP3008 - 8-Channel 10-Bit ADC With SPI Interface (https://www.adafruit.com/product/856)
 * PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A - 1000C (https://www.adafruit.com/product/2465)
 * Lithium Ion Battery Pack - 3.7V 6600mAh (https://www.adafruit.com/product/353)
-* 1 x MicroSD Card
+* MicroSD Card
+* 100k resistor
+* Momentary push button 
+* Yellow LED
+* Red LED
+* Blue LED
 * 4 x 10k resistor
 * 3 x 4001N diode
 * 3 x 330 Ohm resistor
 * 2 x 6.8k resistor
-* 1 x 100k resistor
-* 1 x Momentary push button 
-* 1 x Yellow LED
-* 1 x Red LED
-* 1 x Blue LED
 
 #### Interval Only
 * LIDAR-Lite v3 (https://www.sparkfun.com/products/14032)
